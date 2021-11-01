@@ -1,0 +1,4 @@
+schema: "**/*.graphqls"
+documents: "**/*.graphql"
+plugins:
+  - typescript
