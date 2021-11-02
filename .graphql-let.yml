@@ -1,4 +1,7 @@
-schema: "**/*.graphqls"
+schema: "http://localhost:4000/graphql"
 documents: "**/*.graphql"
 plugins:
   - typescript
+  - typescript-operations
+  - typescript-react-apollo
+cacheDir: .cache
