@@ -8,6 +8,12 @@ yarn
 yarn dev
 ```
 
+## Generating graphql.d.ts files
+
+```sh
+yarn graphql-let
+```
+
 ## Building and deploying in production
 
 ```sh

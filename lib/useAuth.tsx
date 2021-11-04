@@ -10,11 +10,21 @@ type AuthProps = {
   user: any;
   error: string;
   signIn: (email: any, password: any) => Promise<void>;
-  signUn: (email: any, password: any) => Promise<void>;
+  signUp: (email: any, password: any) => Promise<void>;
   signOut: () => void;
 };
 
 const AuthContext = createContext<Partial<AuthProps>>({});
+
+export const AuthProvider = ({ children }) => {
+  const auth = useProvideAuth();
+
+  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
+};
+
+export const useAuth = () => {
+  return useContext(AuthContext);
+};
 
 const useProvideAuth = () => {
   const client = useApolloClient();
@@ -32,7 +42,9 @@ const useProvideAuth = () => {
 
   const signIn = async (email, password) => {
     try {
-      const { data } = await signInMutation({ variables: { email, password } });
+      const { data } = await signInMutation({
+        variables: { input: { email, password } },
+      });
       if (data.login.token && data.login.user) {
         sessionStorage.setItem("token", data.login.token);
         client.resetStore().then(() => {
@@ -48,7 +60,11 @@ const useProvideAuth = () => {
 
   const signUp = async (email, password) => {
     try {
-      const { data } = await signUpMutation({ variables: { email, password } });
+      console.log("email password", email, password);
+      const { data } = await signUpMutation({
+        variables: { input: { email, password } },
+      });
+      console.log("data", data);
       if (data.register.token && data.register.user) {
         sessionStorage.setItem("token", data.register.token);
         client.resetStore().then(() => {

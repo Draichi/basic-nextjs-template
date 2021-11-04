@@ -8,9 +8,9 @@ export default function Index() {
         <Typography variant="h4" component="h1" gutterBottom>
           Helloooo world
         </Typography>
-        <Link href="/about" passHref>
+        <Link href="/streams" passHref>
           <Button variant="contained" color="primary">
-            Go to About page
+            Go to Streams page
           </Button>
         </Link>
       </Box>
