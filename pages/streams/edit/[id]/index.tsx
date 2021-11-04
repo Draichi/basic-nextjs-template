@@ -15,7 +15,7 @@ export default function EditStream({ id }) {
   const [editStream] = useEditStreamMutation();
   const [deleteStream] = useDeleteStreamMutation();
   const [_id, setId] = useState("");
-  let [title, setTitle] = useState("");
+  const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [url, setUrl] = useState("");
 
@@ -27,7 +27,7 @@ export default function EditStream({ id }) {
     });
     const { _id, title, description, url } = data.stream;
     setId(_id);
-    // setTitle(title);
+    setTitle(title);
     setDescription(description);
     setUrl(url);
   };
@@ -35,10 +35,6 @@ export default function EditStream({ id }) {
   useEffect(() => {
     fetchStream();
   });
-
-  function handleInput(e) {
-    setTitle(e.target.value);
-  }
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -61,7 +57,7 @@ export default function EditStream({ id }) {
 
     try {
       const { data } = await deleteStream({
-        variables: { streamId: id },
+        variables: { streamId: _id },
       });
       if (data.deleteStream) {
         router.push("/streams");
@@ -81,7 +77,7 @@ export default function EditStream({ id }) {
             autoFocus
             label="Title"
             value={title}
-            onChange={handleInput}
+            onChange={(e) => setTitle(e.target.value)}
             required
           />
           <Box pb={2.5} />
@@ -112,6 +108,6 @@ export default function EditStream({ id }) {
   );
 }
 
-EditStream.getInitialProps = ({ query: { id } }) => {
+EditStream.getInitialProps = async ({ query: { id } }) => {
   return { id };
 };
